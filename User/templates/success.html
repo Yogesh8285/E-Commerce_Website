@@ -1,0 +1,39 @@
+{%extends 'Homepage.html'%}
+
+{%block content%}
+
+    <style>
+
+      .success{
+        margin-top: 80px;
+        margin-bottom: 80px;
+        color: #9ABC66;
+        font-size: 150px;
+        line-height: 200px;
+        text-align: center;
+      }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+
+
+      @keyframes blink{
+        0%{opacity: 0;}
+        50%{opacity: 1;}
+        100%{opacity: 0;}
+        }
+        .checkmark{
+            animation: blink 2.5s linear infinite;
+        }
+    </style>
+      <div class="success" style="align-items:center;"><i class="checkmark">✓</i>
+        <h1>Payment Successfull</h1>
+        <a href="/"><button type="button" class="btn btn-link">Back To Homepage</button></a>
+      </div>
+
+{%endblock%}

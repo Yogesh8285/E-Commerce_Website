@@ -1,0 +1,19 @@
+{%extends 'Homepage.html'%}
+
+{%block content%}
+<center>
+<form method="post">
+    {%csrf_token%}
+    <div class="panel panel-primary" style="height: 200px; width: 400px;">
+    <table class="table">
+        <tr><td>Enter User Name</td>
+        <td><input type="text" name="uname" class="form-control"required></td></tr>
+        <tr><td>Enter Email ID</td>
+            <td><input type="email" name="email" class="form-control"required></td></tr></tr>
+        <tr><td>Enter password</td>
+            <td><input type="password" name="pass" class="form-control" required></td></tr></tr>
+        <tr><td colspan="2"align="center"><button type="submit" class="btn btn-success">Signup</button></td></tr>
+    </table>
+</form>
+</center>
+{%endblock%}

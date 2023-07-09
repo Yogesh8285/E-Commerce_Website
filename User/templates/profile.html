@@ -1,0 +1,143 @@
+{% extends 'Homepage.html' %}
+{% load static %}
+
+    {% block content %}
+    <script>
+      // This javascript code refers menu bar
+        function open1(){
+          document.getElementById("mySide").style.width = "450px";
+          document.getElementById("main").style.marginLeft = "355px";
+        }
+        
+        function close1() {
+          document.getElementById("mySide").style.width = "0";
+          document.getElementById("main").style.marginLeft= "0";
+        }
+
+        function removeadd(myid){
+          Result = confirm("Are you sure you want to delete(y/n)?");
+          if(Result)
+          {
+            myform = document.getElementById(myid);
+            myform.action ="/addremove"
+            myform.submit();
+          }
+        }
+        </script>
+
+        <style>
+          .side {
+            position: fixed;
+            z-index:1;
+            height: 355px;
+            width:0;
+            
+            top: 100px;
+            left:400px;
+            background-color:pink;
+            overflow-x: hidden;
+            margin:20px;
+            border-radius: 20px;
+          }
+      </style>
+      <div class="container py-5">
+        <div class="jumbotron">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+            class="rounded-circle img-fluid" style="width: 100px;"/> <br/>
+          <p><strong>Email:</strong> <span style="color:blue;" > {{request.session.email}}</span></p>
+          <p><strong>Username:</strong><span style="color:blue;" > {{request.session.uname}}</span></p>
+          <p><a class="btn btn-outline-primary btn-large" href="/passwordchange">Change password »</a></p>
+        </div>
+
+        <div id="mySide" class="side">
+          <form method="post" action="/AddAddress">
+            {%csrf_token%}
+            <table align="center">
+                <tr>
+                    <td><b>Full name</b><br>
+                    <input type="text" name="name"  size="50"></td>
+                </tr>
+                <tr><td><b>Mobile number</b><br>
+                    <input type="text" name="mono" required size="50"></td></tr>
+                    <tr>
+                        <td><b>Pincode</b><br>
+                        <input type="text" name="pin" placeholder="6 Digit" required size="50"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Flat, House no., Building, Company, Appartment</b><br>
+                        <input type="text" name="house" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Toune/City</b><br>
+                        <input type="text" name="city" required size="50"></td>
+                    </tr>
+                    <tr>
+                        <td><b>State</b><br>
+                        <input type="text" name="state" required size="50"></td>
+                    </tr><tr><td><hr></td></tr>
+                    <tr><td align="center"><button class="btn btn-success" type="submit" onclick="close1()">Save Changes</button></td></tr>
+                </table>
+                
+            </form>
+          </div>
+
+        <div>
+            <table class="table table-bordered">
+                <tr><th>Addresses :</th></tr>
+                  {%for add in adds%}
+                  <form method="post" id="myform{{add.id}}">
+                    {%csrf_token%}
+                  <span><input type="hidden" name="addid" value="{{add.id}}"></span>
+                  <tr><td><b style="color:darkgreen;">{{add.name}}</b> {{add.mono}}<br>{{add.house}}{{add.city}},{{add.state}} - <b>{{add.pin}}</b></td>
+                    <td><button class="btn btn-link" type="button" name="action" value="remove" onclick="removeadd('myform{{add.id}}')">Remove</button></td></tr>
+                  </form>
+                  {%endfor%}
+                  
+                  <tr>{%if "uname" in request.session%}
+                    <td><a href="#" style="text-decoration:none;" onclick="open1()"> Add Address</a></td>
+                  {%else%}
+                  <td><a href="/AddAddress" style="text-decoration:none;"> Add Address</a></td>
+                  {%endif%}
+                  </tr>
+            </table>
+        </div>
+
+    
+            <div class="card mb-4" id="tables">
+              <div class="card-header"><b>Orders</b></div>
+            
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Item</th>
+                      <th>qty</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if orders %}
+                      {% for order in orders %}
+                        <tr>
+                          <td>{{order.id}}</td>
+                          <td>{{order.prod.pname}}</td>
+                          <td>
+                            {{order.qty}}
+                          </td>
+                          <td>{{order.amount}}</td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                    <tr>
+                      <td class="text-danger" colspan="3">You've not Ordered anything yet.</td>
+                    </tr>
+                    {% endif %}
+                    
+                    
+                  </tbody>
+                </table>
+                
+              </div>
+
+      </div>
+{% endblock content %}

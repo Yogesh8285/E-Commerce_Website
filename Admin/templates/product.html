@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{%extends "admin.html"%}
+{%block content%}
+<script type="text/javascript">
+    function Add(){
+        result = confirm("Plz Confirm to add(y/n)")
+        if(result){
+            myform = document.getElementById("myform").submit();
+        }
+    }
+    function Remove(myid){
+        result = confirm("Are you sure you want to delete(y/n)?");
+        if(result){
+            myform = document.getElementById(myid);
+            myform.action = "Removepro"
+            myform.submit();
+        }
+    }
+    function Edit(myid){
+        myform = document.getElementById(myid);
+        myform.action = "editproduct"
+        myform.submit();
+    }
+</script>
+
+<div class="container-fluid">
+    <div style="margin:100px;" >
+    
+    <table class="table" style="background-color:rgb(252, 241, 243);">
+        <h2 align="center" style="padding-bottom:10px; font-family: 'Times New Roman', Times, serif;">All Product</h2>
+        <th>Product</th><th>Price</th><th>description</th><th>Size</th><th>Quantity</th><th>Image</th><th>Category</th>
+        {%for p in prod%}
+        <form method="post" id="myform{{p.id}}">
+            {%csrf_token%}
+        
+        <tr><td><input type="hidden" name="prodid" value="{{p.id}}"/>{{p.pname}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.description}}</td>
+            <td>{{p.size}}</td>
+            <td>{{p.quantity}}</td>
+            <td><img src="{{p.image.url}}" height="50" width="50" alt="No Image"></td>
+            <td>{{p.cat}}</td>
+            <td><td><button type="button" class="btn btn-link" name="action" onclick="Edit('myform{{p.id}}')">Edit</button></td></td>
+            <td><button type="button" class="btn btn-link" name="action" onclick="Remove('myform{{p.id}}')">Remove</button></td></tr>
+    </form>
+        {%endfor%}
+    </table>
+    <form method="post"action="editproduct">
+        {%csrf_token%}
+        <table style="width:100%;">
+            <td><input type="submit" style="font-size:10px;" class="btn btn-primary" value="Add New Product"></td>
+            <td align="right"><a href="dashboard">back To Dashboard</a><br>
+                <a href="/">Homepage</a></td></tr>
+        </table>
+    </form>
+
+    </div>
+    
+</div>
+{%endblock%}

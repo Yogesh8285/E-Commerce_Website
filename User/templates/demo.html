@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .side {
+  position: absolute;
+  
+  top: 100px;
+  left:300px;
+  background-color:pink;
+  overflow-x: hidden;
+  margin:20px;
+  border-radius: 20px;
+}
+    </style>
+    <li class="active" onclick="open1()"><a href="#">Home</a></li>
+      <div id="mySide" class="side">
+        <form action="">
+        <table class="table">
+            <tr>
+                <td><b>Full name</b><br>
+                <input type="text" name="name"></td>
+            </tr>
+            <tr><td><b>Mobile number</b><br>
+                <input type="text"></td></tr>
+                <tr>
+                    <td><b>Pincode</b><br>
+                    <input type="text" name="pin" placeholder="6 Digit" size="50"></td>
+                </tr>
+                <tr>
+                    <td><b>Flat, House no., Building, Company, Appartment</b><br>
+                    <input type="text" name="house" size="50"></td>
+                </tr>
+                <tr>
+                    <td><b>Toune/City</b><br>
+                    <input type="text" name="city" size="50"></td>
+                </tr>
+                <tr>
+                    <td><b>State</b><br>
+                    <input type="text" name="state" size="50"></td>
+                </tr>
+                <tr><td align="center"><button class="btn btn-success" type="submit" onclick="close1()">Save Changes</button></td></tr>
+            </table>
+          </form>
+    <script>
+      // This javascript code refers menu bar
+        function open1() {
+          document.getElementById("mySide").style.width = "376px";
+          document.getElementById("main").style.marginLeft = "300px";
+        }
+        
+        function close1() {
+          document.getElementById("mySide").style.width = "0";
+          document.getElementById("main").style.marginLeft= "0";
+        }
+        </script>
+</body>
+</html>

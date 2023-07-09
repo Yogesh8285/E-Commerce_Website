@@ -1,0 +1,42 @@
+{%extends "Homepage.html"%}
+
+{%block content%}
+  <div class="container">
+    <center>
+    <div class="col-sm-6" style="margin-left: 25%;">
+  <h1 style="color:green; background-color:bisque;border-radius: 10px; font-family: 'Times New Roman', Times, serif;">Product Details</h1>
+  <form method="post" action="/addToCart">
+    {%csrf_token%}
+  <table class="table">
+    {%if prod.cat_id == 1 %}
+      <tr><td colspan="2" align="center"><img src="{{prod.image.url}}" height="300px" width="200px"/></td></tr>
+      {%else%}
+      <tr><td colspan="2" align="center"><img src="{{prod.image.url}}" height="300px" width="300px"/></td></tr>
+      {%endif%}
+      <tr><td>Product Name</td>
+        <td>{{prod.pname}}</td></tr>
+      <tr><td>Price</td>
+        <td>{{prod.price}}</td></tr>
+      <tr><td>Product Description</td>
+              <td>{{prod.description}}</td></tr>
+      <tr><td>Size</td>
+      <td>{{prod.size}}</td></tr>
+      <tr><td>Quantity</td>
+        <td><select name="qty" class="form-control">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select></td></tr>
+      <tr><td>
+        <button type="submit" class="btn btn-success">Add To Cart</button>
+      </td><td>
+        <input type="hidden" name="prodid" value="{{prod.id}}"/>
+      </td></tr>
+  </table>
+  </form>
+</div>
+</center>
+</div>
+{%endblock%}

@@ -1,0 +1,87 @@
+
+{%extends "Homepage.html"%}
+
+{%block content%}
+<style>
+ .btn-light button
+  {
+    border-radius: 5px;
+  }
+</style>
+<script type="text/javascript">
+  function Remove(myid)
+  {
+    Result = confirm("Are you sure you want to delete(y/n)?");
+    if(Result)
+    { 
+      myform = document.getElementById(myid);
+      myform.action ="/removeItem"
+      myform.submit();
+    }
+  }
+  function decrement(myid)
+  {
+    txtqty = document.getElementById(myid);
+    if(txtqty.value > 1)
+    {
+      txtqty.value = parseInt(txtqty.value)-1;
+    }
+  }
+  function increment(myid)
+  {
+    txtqty = document.getElementById(myid);
+    if(txtqty.value < 10)
+    {
+      txtqty.value = parseInt(txtqty.value)+1;
+    }
+  }
+</script>
+<div style="background-color:gainsboro;">
+  <div class="container-fluid">
+    <center>
+    <div class="col-sm-8">
+  <h1 style="color:green; background-color:bisque;border-radius: 10px; font-family: 'Times New Roman', Times, serif;">Cart Details</h1>
+  <table style="height:200px; width:100%;">
+    <!-- <th></th><th>P Name</th> <th><s>Price</s></th><th>Qty</th><th>Sub-Total</th><tr></tr> -->
+    <tr>
+    {%for item in items %}
+    <form method="post" id="myform{{item.prod.id}}">
+      {%csrf_token%}
+    <tr>
+      <td rowspan="3"><img src="{{item.prod.image.url}}" style="height:50px; width: 50px;padding-top:1px;" alt=""></td>
+      <td><input type="hidden" name="prodid" value="{{item.prod.id}}"/>{{item.prod.pname}} - {{item.prod.description}}</td>
+    <tr><td>₹{% widthratio item.qty 1 item.prod.price %}</td></tr>
+    <td><button type="submit" class="btn btn-light" onclick="decrement('qty{{item.prod.id}}')" style="border-radius:12px;" >-</button>
+      <input type="text" value="{{item.qty}}" name="qty" id="qty{{item.prod.id}}" size="1" style="text-align:center;">
+        <button type="submit" class="btn btn-light" onclick="increment('qty{{item.prod.id}}')" style="border-radius:12px;">+</button>
+    <td> {%if item.prod.price > 1000%}
+        Delevery Charges - <s>₹40</s>
+        <p style="color:green;" >Free</p>
+        {%else%}
+        <span>Delevery Charges - ₹40</span>
+        {%endif%}
+    </td>
+    <td><button class="btn btn-link" type="button" name="action" value="remove" onclick="Remove('myform{{item.prod.id}}')">Remove</button></td>
+</tr>
+</td></tr>
+<tr><td colspan="3"><hr></td></tr>
+</form>
+    {%endfor%}
+    <hr>
+  </table>
+</div>
+<div class="col-sm-3" style="margin-top:50;" >
+  <table class="table">
+    <th><h4 style="color:gray;">PRICE DETAILS</h4></th>
+    <tr><td>Total Amount</td>
+    <td>₹{{request.session.total}}</td></tr>
+  </table>
+    <div>
+        <a href="/MakePayment" class="btn btn-success" style="background-color:orangered;">Place Order</a>
+    </div>
+</div>
+</div>
+</div>
+</center>
+</div>
+{%endblock%}

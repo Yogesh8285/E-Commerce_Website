@@ -1,0 +1,55 @@
+{%extends "admin.html"%}
+{%block content%}
+
+<style>
+    .table
+    {
+        margin-left: 50%;
+        margin-top: 100px;
+        background-color:rgb(252, 241, 243)
+    }
+</style>
+
+<div class="container" >
+    <div class="col-sm-6">
+    <form method="post" action="modifyproduct" enctype="multipart/form-data">
+        {%csrf_token%}
+        <table class="table">
+            <th >Enter Product Details</th>
+            <tr><td>Enter Product Name</td>
+                <td><input type="hidden" name="prodid" value="{{prod.id}}">
+                <input type="text" name="pname" value="{{prod.pname}}"/></td>
+            </tr>
+            <tr><td>Enter Product Price</td>
+                <td><input type="text" name="price" value="{{prod.price}}"/></td>
+            </tr>
+            <tr><td>Enter Product Description</td>
+                <td><input type="text" name="description" value="{{prod.description}}"/></td>
+            </tr>
+            <tr><td>Enter Product Size</td>
+                <td><input type="text" name="size" value="{{prod.size}}"/></td>
+            </tr>
+            <tr><td>Enter Product Quantity</td>
+                <td><input type="text" name="qty" value="{{prod.quantity}}"/></td>
+            </tr>
+            <tr><td>Upload Product Image</td>
+                <td><input type="file" name="image" value="{{prod.image.url}}" /></td>
+            </tr>
+            <tr><td>Enter Product Category</td>
+                <td><select name="cat" class="form-control">
+                    <option name="cat" value="{{prod.cat.Category_name}}" selected>{{prod.cat}}</option>
+                    {%for cat in cats%}
+                    {%if cat != prod.cat%}
+                    <option name = "cat" value="{{cat}}">{{cat}}</option>
+                    {%endif%}
+                    {%endfor%}
+                  </select></td></tr>
+            <tr><td><input type="submit" class="btn btn-success"></td>
+                <td align="right"><a href="product">back To Product</a><br>
+                <a href="/">Homepage</a></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,22 @@
+{%extends "Homepage.html"%}
+{%block content%}
+<style>
+    center
+    {
+        margin-top: 200px;
+    }
+</style>
+<center><h1 class="panel-heading">Login</h1>
+<form method="post">
+    {%csrf_token%}
+    <div class="panel panel-primary" style="height: 200px; width: 400px;">
+<table class="table">
+    <tr><td>Enter Login Id</td>
+        <td><input type="text" name="uname" class="form-control" required></td></tr>
+    <tr><td>Enter Password</td>
+        <td><input type="password" name="pass" class="form-control" required></td></tr>
+    <tr><td colspan="2" align="center" ><button type="submit" class="btn btn-success">Login</button></td></tr>
+    <tr><td colspan="2" style="color:red;padding-top: 0;">{{a}} <br><a href="\signup" style="text-decoration: none;">New to YCart? Create an account</a></td></tr>
+</table></div>
+</form></center>
+{%endblock%}
